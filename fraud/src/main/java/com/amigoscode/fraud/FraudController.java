@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("api/v1/fraud-check")
 @AllArgsConstructor
@@ -19,5 +21,10 @@ public class FraudController {
         log.info("fraud check request for customer {}", customerId);
 
         return new FraudCheckResponse(isFraudulentCustomer);
+    }
+
+    @GetMapping("customer/{customerId}")
+    public Optional<FraudCheckHistory> getDataFraud(@PathVariable Integer customerId) {
+        return fraudCheckService.findById(customerId);
     }
 }
